@@ -9,8 +9,8 @@ sheety_data = data_manager.get_destination_data()
 
 for _ in sheety_data:
     if _['iataCode'] == "":
-        flight_search = FlightSearch(_['city'])
-        _['iataCode'] = flight_search.get_destination_iataCode()
+        flight_search = FlightSearch()
+        _['iataCode'] = flight_search.get_destination_code(_['city'])
 
 data_manager.destination_data = sheety_data
 data_manager.update_iata_code()
