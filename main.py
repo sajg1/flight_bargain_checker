@@ -1,22 +1,18 @@
 #This file will need to use the DataManager,FlightSearch, FlightData, NotificationManager classes to achieve the program requirements.
-import os
-import requests
+
 from flight_search import FlightSearch
-from pprint import pprint
+from data_manager import DataManager
 
-SHEETY_USERNAME = os.environ.get("SHEETY_USERNAME")
-SHEETY_AUTH = os.environ.get("AUTH_HEADER")
-sheety_endpoint = f"https://api.sheety.co/{SHEETY_USERNAME}/flightdealstracker/prices"
+data_manager = DataManager()
+sheety_data = data_manager.get_destination_data()
 
-sheety_headers = {
-    "Authorization": SHEETY_AUTH
-}
 
-response = requests.get(url=sheety_endpoint, headers=sheety_headers)
-sheet_data = response.json()['prices']
-# pprint(sheet_data)
-for _ in sheet_data:
+for _ in sheety_data:
     if _['iataCode'] == "":
         flight_search = FlightSearch(_['city'])
-        _['iataCode'] = flight_search.search_iataCode()
+        _['iataCode'] = flight_search.get_destination_iataCode()
 
+data_manager.destination_data = sheety_data
+data_manager.update_iata_code()
+
+print(sheety_data)
