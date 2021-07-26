@@ -22,7 +22,7 @@ class DataManager:
         data = response.json()
         self.destination_data = data["prices"]
         # 3. Try importing pretty print and printing the data out again using pprint() to see it formatted.
-        pprint(self.destination_data)
+        # pprint(self.destination_data)
         return self.destination_data
 
     def update_iata_code(self):
@@ -33,4 +33,4 @@ class DataManager:
                 }
             }
             response = requests.put(url=f"{sheety_endpoint}/{city['id']}", json=new_data)
-            print(response.text)
+            # print(response.text)
